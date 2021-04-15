@@ -161,18 +161,24 @@ int main(int argc, char** argv)
    glm::mat4 transform(1.0); // initialize to identity
    //glm::mat4 projection = glm::perspective(glm::radians(60.0f), 1.0, 0.1, 10.0);
    glm::mat4 projection = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -2.0f, 2.0f);
-   glm::mat4 camera = glm::lookAt(glm::vec3(0,0,1), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 
    glClearColor(0, 0, 0, 1);
 
+   glm::vec3 lookfrom(0,0,1);
+   float r = 1.0;
    // Loop until the user closes the window 
    while (!glfwWindowShouldClose(window))
    {
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear the buffers
 
       // Update transform
-      float dx = 0.1 * sin(glfwGetTime());
-      transform = glm::translate(glm::mat4(1.0), glm::vec3(dx, 0, 0));
+      float theta = glfwGetTime();
+      float phi = glfwGetTime();
+      lookfrom.x = r * cos(phi) * sin(theta);
+      lookfrom.z = r * sin(phi) * sin(theta);
+      lookfrom.y = r * cos(theta);
+      transform = glm::mat4(1.0); // identity 
+      glm::mat4 camera = glm::lookAt(lookfrom, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
       glm::mat4 mvp = projection * camera * transform;
       glUniformMatrix4fv(matrixParam, 1, GL_FALSE, &mvp[0][0]);
 

@@ -102,3 +102,5 @@ target_link_libraries(triangle-shadermvp ${CORE})
 add_executable(triangle-shadermatrix src/triangle-shadermatrix.cpp ${SOURCES})
 target_link_libraries(triangle-shadermatrix ${CORE})
 
+add_executable(triangle-rotate src/triangle-rotate.cpp ${SOURCES})
+target_link_libraries(triangle-rotate ${CORE})
